@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+    using System.Collections.Generic;
 using System.Reflection;
 using Autofac;
 using Microsoft.AspNetCore.Builder;
@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CR.RoomBooking.Data;
 using CR.RoomBooking.Services;
+using CR.RoomBooking.Data.Interfaces;
+using CR.RoomBooking.Data.Repositories;
 
 namespace CR.RoomBooking.Web
 {
@@ -24,6 +26,7 @@ namespace CR.RoomBooking.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddControllers();
 
             services.AddDbContext<RoomBookingsContext>(op => op.UseInMemoryDatabase("RoomBookings"));
