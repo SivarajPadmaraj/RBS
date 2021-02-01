@@ -11,6 +11,7 @@ using CR.RoomBooking.Data;
 using CR.RoomBooking.Services;
 using CR.RoomBooking.Data.Interfaces;
 using CR.RoomBooking.Data.Repositories;
+using CR.RoomBooking.Services.Services;
 
 namespace CR.RoomBooking.Web
 {
@@ -26,7 +27,7 @@ namespace CR.RoomBooking.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IPersonService, PersonServices>();
             services.AddControllers();
 
             services.AddDbContext<RoomBookingsContext>(op => op.UseInMemoryDatabase("RoomBookings"));
