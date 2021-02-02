@@ -28,6 +28,11 @@ namespace CR.RoomBooking.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IPersonService, PersonServices>();
+            services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IRoomService, RoomService>();
+
+            services.AddScoped<IBookingRepository, BookingRepository>();
+            services.AddScoped<IBookingService, BookingService>();
             services.AddControllers();
 
             services.AddDbContext<RoomBookingsContext>(op => op.UseInMemoryDatabase("RoomBookings"));
