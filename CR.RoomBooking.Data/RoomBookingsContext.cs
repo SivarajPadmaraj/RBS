@@ -13,5 +13,6 @@ namespace CR.RoomBooking.Data
         public DbSet<Person> People { get; set; }
 
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
     }
 }

@@ -10,13 +10,14 @@ namespace CR.RoomBooking.Data.Interfaces
 {
     public interface IPersonRepository
     {
-        ActionResult<IEnumerable<Person>> Get();
+        Task<IEnumerable<Person>> ListAsync();
 
-        void Post(Person _person);
+        Task<Person> FindIdAsync(int id);
+        Task AddAsync(Person person);
 
-        void Update(Person _person);
+        Task DeleteAsync(int id);
+        Task UpdateAsync(Person person);
 
-        void Delete(int? id);
-        ActionResult<Person> GetPerson(int? id);
+        
     }
 }

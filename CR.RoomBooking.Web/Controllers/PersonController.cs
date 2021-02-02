@@ -7,6 +7,8 @@ using CR.RoomBooking.Data.Domain;
 using System.Collections.Generic;
 using System;
 using Microsoft.AspNetCore.Http;
+using CR.RoomBooking.Services.Enum;
+using CR.RoomBooking.Services.Services;
 
 namespace CR.RoomBooking.Web.Controllers
 {
@@ -14,105 +16,77 @@ namespace CR.RoomBooking.Web.Controllers
     [Route("[controller]")]
     public class PersonController : ControllerBase
     {
-        //private readonly IPersonService _personService;
+       
 
-        //public PersonController(IPersonService personService)
-        //{
-        //    _personService = personService;
-        //}
+        private readonly IPersonService _repo;
 
-        //[HttpGet("{personId}")]
-        //public async Task<ActionResult<PersonInfo>> Get(int personId)
-        //{
-        //    var person = await _personService.GetAsync(personId);
-        //    return person;
-        //}
-
-        private readonly IPersonRepository _repo;
-
-        public PersonController(IPersonRepository repo)
+        public PersonController(IPersonService repo)
         {
             _repo = repo;
         }
 
-        // GET: api/[controller]
         [HttpGet]
-        public ActionResult<IEnumerable<Person>> GetValues()
+        public async Task<IEnumerable<Person>> GetAllAsync()
         {
-            try
-            {
-                var person = _repo.Get();
-                return Ok(person);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
+            var persons = await _repo.ListAsync();
+            return persons;
         }
 
-        // POST: api/[controller]
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] Person person)
+        public async Task<IActionResult> PostAsync([FromBody] Person person)
         {
-            if (person == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
-            }
-            try
-            {
-                _repo.Post(person);
-                return Ok("Person Added");
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
-        }
-
-
-        [HttpPut]
-        public async Task<ActionResult> Update([FromBody] Person person)
-        {
-            if (person == null)
-            {
-                return NotFound("Getting null for student");
+                return BadRequest("Post error"); // TODO: More error information
             }
 
-            _repo.Update(person);
-            return Ok("Person Updated");
-        }
+            Result result = await _repo.SaveAsync(person);
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
+            if (result == Result.Failure)
             {
-                return NotFound("Getting null for person id");
+                return BadRequest("Post error");
             }
-            _repo.Delete(id);
-            return Ok("Person Deleted");
+
+            return Ok();
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Person>> GetPerson(int? id)
+        public async Task<Person> GetByIdAsync(int id)
         {
-            try
-            {
-
-
-                if (id == null)
-                {
-                    return NotFound("Getting null for person id");
-                }
-               var p =  _repo.GetPerson(id);
-                return p;
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error retrieving data from the database");
-            }
+            var persons = await _repo.FindIdAsync(id);
+            return persons;
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePerson (int id)
+        {
+            Result result = await _repo.DeleteAsync(id);
+
+            if(result== Result.Failure)
+            {
+                return BadRequest("Post Error");
+            }
+
+            return Ok();
+
+        }
+        [HttpPut]
+        public async Task<IActionResult> UpdatePerson(Person person)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Post error"); // TODO: More error information
+            }
+
+            Result result = await _repo.UpdateAsync(person);
+
+            if (result == Result.Failure)
+            {
+                return BadRequest("Post error");
+            }
+
+            return Ok();
+        }
+        
     }
 }

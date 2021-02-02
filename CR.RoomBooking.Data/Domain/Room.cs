@@ -4,10 +4,9 @@ namespace CR.RoomBooking.Data.Domain
 {
     public class Room
     {
-        public int Id { get; set; }
-        
-        public string Name { get; set; }
-        
-        public ICollection<RoomBooking> Bookings { get; set; }
+
+        public int RoomID { get; set; }
+        public int PersonID { get; set; }
+        public int Type { get; set; }
     }
 }
