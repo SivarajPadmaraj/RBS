@@ -45,5 +45,41 @@ namespace CR.RoomBooking.Services.Services
             }
             return Result.Failure; //TODO: add more error info
         }
+
+        public async Task<Result> UpdateAsync(Room room)
+        {
+            try
+            {
+                await roomRepository.UpdateAsync(room);
+                return Result.Success;
+            }
+            catch
+            {
+                return Result.Failure;
+            }
+        }
+
+        public async Task<Room> FindIdAsync(int id)
+        {
+            if (id >= 0)
+            {
+                return await roomRepository.FindIdAsync(id);
+
+            }
+            return await roomRepository.FindIdAsync(id);
+        }
+
+        public async Task<Result> DeleteAsync(int id)
+        {
+            try
+            {
+                await roomRepository.DeleteAsync(id);
+                return Result.Success;
+            }
+            catch
+            {
+                return Result.Failure;
+            }
+        }
     }
 }

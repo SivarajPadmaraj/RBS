@@ -10,7 +10,7 @@ namespace CR.RoomBooking.Services.Services
     public interface IBookingService
     {
         Task<IEnumerable<Booking>> ListAsync(int id);
-
+        Task<Result> DeleteAsync(int id);
         Task<Result> SaveAsync(Booking booking);
     }
 }

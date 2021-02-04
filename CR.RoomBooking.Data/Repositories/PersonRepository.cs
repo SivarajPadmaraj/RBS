@@ -35,7 +35,7 @@ namespace CR.RoomBooking.Data.Repositories
         {
 
           Person person = _Context.People.FirstOrDefault(s => s.Id == id);
-            if (person != null)
+            if (person.Id == id )
             {
                 _Context.People.Remove(person);
              _Context.SaveChanges();

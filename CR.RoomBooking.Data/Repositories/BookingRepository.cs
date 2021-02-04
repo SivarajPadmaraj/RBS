@@ -49,5 +49,17 @@ namespace CR.RoomBooking.Data.Repositories
             Room room = await _Context.Rooms.FindAsync(booking.RoomId);
             return booking.PartySize <= 3;
         }
+
+        public async Task DeleteAsync(int id)
+        {
+
+            Booking booking =await _Context.Bookings.FirstOrDefaultAsync(s => s.BookingId == id);
+            if (booking.BookingId == id)
+            {
+                _Context.Bookings.Remove(booking);
+                _Context.SaveChanges();
+            }
+
+        }
     }
 }

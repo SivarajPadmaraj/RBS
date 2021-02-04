@@ -15,5 +15,9 @@ namespace CR.RoomBooking.Data.Interfaces
         Task AddAsync(Room room);
 
         Task<bool> CheckMaxRoomsAsync(Room room);
+
+        Task DeleteAsync(int id);
+        Task UpdateAsync(Room room);
+        Task<Room> FindIdAsync(int id);
     }
 }

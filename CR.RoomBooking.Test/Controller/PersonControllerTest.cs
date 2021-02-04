@@ -37,16 +37,7 @@ namespace CR.RoomBooking.Test.Controller
             Assert.IsAssignableFrom<IEnumerable<Person>>(persons);
             Assert.Equal(3, persons.ToList().Count);
         }
-        [Fact]
-        public async void Fail_GetAllAsync_WhenCalled_ReturnsAllHotels()
-        {
-            // Act
-            var persons = await controller.GetAllAsync();
-
-            // Assert
-            Assert.IsAssignableFrom<IEnumerable<Person>>(persons);
-            Assert.Equal(4, persons.ToList().Count);
-        }
+       
         [Fact]
         public async void PostAsync_WhenCalledWithValidModel_ReturnsOk()
         {
@@ -64,7 +55,7 @@ namespace CR.RoomBooking.Test.Controller
         [Fact]
         public async void DeletAsync_whenCall_Resturnsok()
         {
-            var result = await controller.DeletePerson(5);
+            var result = await controller.DeletePerson(2);
 
             Assert.IsType<OkResult>(result);
         }

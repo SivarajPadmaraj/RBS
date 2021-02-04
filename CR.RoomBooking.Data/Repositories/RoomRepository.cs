@@ -46,5 +46,39 @@ namespace CR.RoomBooking.Data.Repositories
             int roomCount = await _Context.Rooms.CountAsync(r => r.PersonID == room.PersonID);
             return roomCount < 6;
         }
+
+        public async Task DeleteAsync(int id)
+        {
+
+            Room rooma = _Context.Rooms.FirstOrDefault(s => s.RoomID == id);
+            if (rooma.RoomID == id)
+            {
+                _Context.Rooms.Remove(rooma);
+                _Context.SaveChanges();
+            }
+
+        }
+        public async Task UpdateAsync(Room room)
+        {
+            Room existingRoom = await _Context.Rooms.FirstOrDefaultAsync(s => s.RoomID == room.RoomID);
+
+            if (existingRoom != null)
+            {
+                existingRoom.RoomID = room.RoomID;
+                existingRoom.PersonID = room.PersonID;
+                existingRoom.Type = room.Type;
+
+                _Context.Attach(existingRoom).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                await _Context.SaveChangesAsync();
+            }
+
+        }
+
+        public async Task<Room> FindIdAsync(int id)
+        {
+            return await _Context.Rooms.FirstOrDefaultAsync(s => s.RoomID == id);
+
+
+        }
     }
 }

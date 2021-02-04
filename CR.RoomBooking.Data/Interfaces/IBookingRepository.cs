@@ -12,7 +12,7 @@ namespace CR.RoomBooking.Data.Interfaces
         Task<Booking> GetFromIDAsync(int id);
 
         Task AddAsync(Booking booking);
-
+        Task DeleteAsync(int id);
         Task<bool> CheckClashAsync(Booking booking);
 
         Task<bool> CheckCapacityAsync(Booking booking);

@@ -27,6 +27,18 @@ namespace CR.RoomBooking.Services.Services
             return await bookingRepository.ListAsync();
         }
 
+        public async Task<Result> DeleteAsync(int id)
+        {
+            try
+            {
+                await bookingRepository.DeleteAsync(id);
+                return Result.Success;
+            }
+            catch
+            {
+                return Result.Failure;
+            }
+        }
         public async Task<Result> SaveAsync(Booking booking)
         {
             // Check dates are in the future and end date is after start date

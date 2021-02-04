@@ -12,5 +12,8 @@ namespace CR.RoomBooking.Services.Services
         Task<IEnumerable<Room>> ListAsync(string startDate, string endDate, int partySize);
 
         Task<Result> SaveAsync(Room room);
+        Task<Room> FindIdAsync(int id);
+        Task<Result> UpdateAsync(Room room);
+        Task<Result> DeleteAsync(int id);
     }
 }

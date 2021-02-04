@@ -42,8 +42,14 @@ namespace CR.RoomBooking.Test
         public async Task<Result> DeleteAsync(int id)
         {
             Person person = _persons.Where(a => a.Id == id).FirstOrDefault();
-            _persons.Remove(person);
-            return Result.Success;
+            if(person.Id == id)
+            {
+                _persons.Remove(person);
+                return Result.Success;
+            }
+
+            return Result.Failure;
+           
         }
         
 
